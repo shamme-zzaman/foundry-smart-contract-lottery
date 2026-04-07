@@ -8,7 +8,7 @@ import {LinkToken} from "test/mocks/LinkToken.sol";
 abstract contract CodeConstants {
     /* VRF Mock values */
     uint96 public MOCK_BASE_FEE = 0.25 ether;
-    uint96 public MOCK_GAS_PRICE_LINK = 1E9;
+    uint96 public MOCK_GAS_PRICE_LINK = 1e9;
     // LINK / ETH price
     int256 public MOCK_WEI_PER_UINT_LINK = 4e15;
 
@@ -37,9 +37,7 @@ contract HelperConfig is CodeConstants, Script {
         networkConfigs[ETH_SEPOLIA_CHAIN_ID] = getSepoliaEthConfig();
     }
 
-    function getConfigByChainId(
-        uint256 chainId
-    ) public returns (NetworkConfig memory) {
+    function getConfigByChainId(uint256 chainId) public returns (NetworkConfig memory) {
         if (networkConfigs[chainId].vrfCoordinator != address(0)) {
             return networkConfigs[chainId];
         } else if (chainId == LOCAL_CHAIN_ID) {
@@ -54,17 +52,16 @@ contract HelperConfig is CodeConstants, Script {
     }
 
     function getSepoliaEthConfig() public pure returns (NetworkConfig memory) {
-        return
-            NetworkConfig({
-                entranceFee: 0.01 ether,
-                interval: 30,
-                vrfCoordinator: 0x9DdfaCa8183c41ad55329BdeeD9F6A8d53168B1B, // Sepolia VRF Coordinator
-                gasLane: 0x787d74caea10b2b357790d5b5247c2f63d1d91572a9846f780606e4d953677ae, // Sepolia Gas Lane
-                callbackGasLimit: 500000, // Set an appropriate callback gas limit
-                subscriptionId: 0,
-                link: 0x779877A7B0D9E8603169DdbD7836e478b4624789,
-                account: 0xDFF117dCEE55Abdf2A365166a725aA2C86fc751E
-            });
+        return NetworkConfig({
+            entranceFee: 0.01 ether,
+            interval: 30,
+            vrfCoordinator: 0x9DdfaCa8183c41ad55329BdeeD9F6A8d53168B1B, // Sepolia VRF Coordinator
+            gasLane: 0x787d74caea10b2b357790d5b5247c2f63d1d91572a9846f780606e4d953677ae, // Sepolia Gas Lane
+            callbackGasLimit: 500000, // Set an appropriate callback gas limit
+            subscriptionId: 0,
+            link: 0x779877A7B0D9E8603169DdbD7836e478b4624789,
+            account: 0xDFF117dCEE55Abdf2A365166a725aA2C86fc751E
+        });
     }
 
     function getOrCreateAnvilEthConfig() public returns (NetworkConfig memory) {
@@ -74,11 +71,8 @@ contract HelperConfig is CodeConstants, Script {
         }
         // Deploy mocks and such
         vm.startBroadcast();
-        VRFCoordinatorV2_5Mock vrfCoordinatorMock = new VRFCoordinatorV2_5Mock(
-            MOCK_BASE_FEE,
-            MOCK_GAS_PRICE_LINK,
-            MOCK_WEI_PER_UINT_LINK
-        );
+        VRFCoordinatorV2_5Mock vrfCoordinatorMock =
+            new VRFCoordinatorV2_5Mock(MOCK_BASE_FEE, MOCK_GAS_PRICE_LINK, MOCK_WEI_PER_UINT_LINK);
         LinkToken linkToken = new LinkToken();
         vm.stopBroadcast();
 
