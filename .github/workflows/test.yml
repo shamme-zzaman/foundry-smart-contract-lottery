@@ -32,7 +32,7 @@ jobs:
         run: forge fmt --check
 
       - name: Run Forge build
-        run: forge build --sizes --ignore-eip-170
+        run: forge build --ignore-eip-170
 
       - name: Run Forge tests
         run: forge test -vvv
